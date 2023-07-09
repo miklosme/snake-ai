@@ -34,9 +34,9 @@ class SnakeGameAI:
         self.w = w
         self.h = h
         # init display
-        self.display = pygame.display.set_mode((self.w, self.h))
-        pygame.display.set_caption("Snake")
-        self.clock = pygame.time.Clock()
+        # self.display = pygame.display.set_mode((self.w, self.h))
+        # pygame.display.set_caption("Snake")
+        # self.clock = pygame.time.Clock()
         self.reset()
 
     def reset(self):
@@ -63,11 +63,10 @@ class SnakeGameAI:
 
     def play_step(self, action):
         self.frame_iteration += 1
-        # 1. collect user input
+
+        # if i comment out this loop, then the window that shows the plotting won't appear
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
+            pass
 
         # 2. move
         self._move(action)  # update the head
@@ -90,8 +89,8 @@ class SnakeGameAI:
             self.snake.pop()
 
         # 5. update ui and clock
-        self._update_ui()
-        self.clock.tick(SPEED)
+        # self._update_ui()
+        # self.clock.tick(SPEED)
         # 6. return game over and score
         return reward, game_over, self.score
 
@@ -112,26 +111,26 @@ class SnakeGameAI:
 
         return False
 
-    def _update_ui(self):
-        self.display.fill(BLACK)
+    # def _update_ui(self):
+    #     self.display.fill(BLACK)
 
-        for pt in self.snake:
-            pygame.draw.rect(
-                self.display, BLUE1, pygame.Rect(pt.x, pt.y, BLOCK_SIZE, BLOCK_SIZE)
-            )
-            pygame.draw.rect(
-                self.display, BLUE2, pygame.Rect(pt.x + 4, pt.y + 4, 12, 12)
-            )
+    #     for pt in self.snake:
+    #         pygame.draw.rect(
+    #             self.display, BLUE1, pygame.Rect(pt.x, pt.y, BLOCK_SIZE, BLOCK_SIZE)
+    #         )
+    #         pygame.draw.rect(
+    #             self.display, BLUE2, pygame.Rect(pt.x + 4, pt.y + 4, 12, 12)
+    #         )
 
-        pygame.draw.rect(
-            self.display,
-            RED,
-            pygame.Rect(self.food.x, self.food.y, BLOCK_SIZE, BLOCK_SIZE),
-        )
+    #     pygame.draw.rect(
+    #         self.display,
+    #         RED,
+    #         pygame.Rect(self.food.x, self.food.y, BLOCK_SIZE, BLOCK_SIZE),
+    #     )
 
-        text = font.render("Score: " + str(self.score), True, WHITE)
-        self.display.blit(text, [0, 0])
-        pygame.display.flip()
+    #     text = font.render("Score: " + str(self.score), True, WHITE)
+    #     self.display.blit(text, [0, 0])
+    #     pygame.display.flip()
 
     def _move(self, action):
         # [straight, right, left]
